@@ -25,6 +25,7 @@ const seattle = {
   avgCookieSale: 6.3,
   custPerHour: [],
   cookiesPerHour: [],
+  cookiesTotal: null,
   getCustPerHour: function(){
     for(let i = 0; i < hours.length; i++){
       this.custPerHour.push(randomCust(this.minCust,this.maxCust));
@@ -33,6 +34,11 @@ const seattle = {
   getCookiesPerHour: function(){
     for(let i = 0; i < this.custPerHour.length; i++){
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    }
+  },
+  getCookiesTotal: function(){
+    for (let i = 0; i < this.cookiesPerHour.length; i++){
+      this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
 };
@@ -45,6 +51,7 @@ const tokyo = {
   avgCookieSale: 1.2,
   custPerHour: [],
   cookiesPerHour: [],
+  cookiesTotal: null,
   getCustPerHour: function(){
     for(let i = 0; i < hours.length; i++){
       this.custPerHour.push(randomCust(this.minCust,this.maxCust));
@@ -53,6 +60,11 @@ const tokyo = {
   getCookiesPerHour: function(){
     for(let i = 0; i < this.custPerHour.length; i++){
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    }
+  },
+  getCookiesTotal: function(){
+    for (let i = 0; i < this.cookiesPerHour.length; i++){
+      this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
 };
@@ -65,6 +77,7 @@ const dubai = {
   avgCookieSale: 3.7,
   custPerHour: [],
   cookiesPerHour: [],
+  cookiesTotal: null,
   getCustPerHour: function(){
     for(let i = 0; i < hours.length; i++){
       this.custPerHour.push(randomCust(this.minCust,this.maxCust));
@@ -73,6 +86,11 @@ const dubai = {
   getCookiesPerHour: function(){
     for(let i = 0; i < this.custPerHour.length; i++){
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    }
+  },
+  getCookiesTotal: function(){
+    for (let i = 0; i < this.cookiesPerHour.length; i++){
+      this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
 };
@@ -85,6 +103,7 @@ const paris = {
   avgCookieSale: 2.3,
   custPerHour: [],
   cookiesPerHour: [],
+  cookiesTotal: null,
   getCustPerHour: function(){
     for(let i = 0; i < hours.length; i++){
       this.custPerHour.push(randomCust(this.minCust,this.maxCust));
@@ -93,6 +112,11 @@ const paris = {
   getCookiesPerHour: function(){
     for(let i = 0; i < this.custPerHour.length; i++){
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    }
+  },
+  getCookiesTotal: function(){
+    for (let i = 0; i < this.cookiesPerHour.length; i++){
+      this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
 };
@@ -105,6 +129,7 @@ const lima = {
   avgCookieSale: 4.6,
   custPerHour: [],
   cookiesPerHour: [],
+  cookiesTotal: null,
   getCustPerHour: function(){
     for(let i = 0; i < hours.length; i++){
       this.custPerHour.push(randomCust(this.minCust,this.maxCust));
@@ -113,6 +138,11 @@ const lima = {
   getCookiesPerHour: function(){
     for(let i = 0; i < this.custPerHour.length; i++){
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    }
+  },
+  getCookiesTotal: function(){
+    for (let i = 0; i < this.cookiesPerHour.length; i++){
+      this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
 };
@@ -130,6 +160,7 @@ function getLocationHourlyData(locArr) {
   for (let i = 0; i < locArr.length; i++){
     locArr[i].getCustPerHour();
     locArr[i].getCookiesPerHour();
+    locArr[i].getCookiesTotal();
     console.log(locArr[i]);
   }
 }
