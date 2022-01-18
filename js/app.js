@@ -21,22 +21,20 @@ const hours = [
 
 let dataDisplayElem = document.getElementById('dataDisplay');
 
-// I'm making a table of location data. I'm sure I'll need this or a component array in later iterations of this site
-/*
-let locDataTable = [
-  ['Seattle','Tokyo','Dubai','Paris','Lima'],
-  [23,3,11,20,2],
-  [65,24,38,38,16],
-  [6.3,1.2,3.7,2.3,4.6]
+// I'm making a table of each store's customer and cookies-per-customer data. I'm sure I'll need this or a component array in later iterations of this site
+
+let storeDataTable = [
+  ['Seattle', 23, 65, 6.3],
+  ['Tokyo', 3, 24, 1.2],
+  ['Dubai', 11, 38, 3.7],
+  ['Paris', 20, 38, 2.3],
+  ['Lima', 2, 16, 4.6],
 ];
-*/
 
-// this array will store the location objects, so I can use for loops later in the code to keep things dry.
-const locObjects = [];
+// this array will store the store objects, so I can use for loops later in the code to keep things dry.
+const storeArray = [];
 
-// cph means customers per hour
-
-// Store constructor
+// Store constructor function
 
 function Store(location, minCust, maxCust, avgCookieSale) {
   this.location = location;
@@ -46,161 +44,46 @@ function Store(location, minCust, maxCust, avgCookieSale) {
   this.custPerHour = [];
   this.cookiesPerHour = [];
   this.cookiesTotal = 0;
-  locObjects.push(this);
 }
 
-Store.prototype.getCustPerHour = function() {
+// This function calls the constructor function using passed-in array of store data, then pushes the returned object into the storeArray
+
+function constructorLoop(dataArray) {
+  console.table(dataArray);
+  for (let i = 0; i < dataArray.length; i++) {
+    let newStore = new Store(
+      dataArray[i][0],
+      dataArray[i][1],
+      dataArray[i][2],
+      dataArray[i][3]
+    );
+    storeArray.push(newStore);
+  }
+}
+
+Store.prototype.getCustPerHour = function () {
   for (let i = 0; i < hours.length; i++) {
     this.custPerHour.push(randomCust(this.minCust, this.maxCust));
   }
 };
 
-Store.prototype.getCookiesPerHour = function() {
+Store.prototype.getCookiesPerHour = function () {
   for (let i = 0; i < this.custPerHour.length; i++) {
-    this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+    this.cookiesPerHour.push(Math.ceil(this.custPerHour[i] * this.avgCookieSale));
   }
 };
 
-Store.prototype.getCookiesTotal = function() {
+Store.prototype.getCookiesTotal = function () {
   for (let i = 0; i < this.cookiesPerHour.length; i++) {
     this.cookiesTotal += this.cookiesPerHour[i];
   }
 };
 
-/*
-const seattle = {
-  location: 'Seattle',
-  minCust: 23,
-  maxCust: 65,
-  avgCookieSale: 6.3,
-  custPerHour: [],
-  cookiesPerHour: [],
-  cookiesTotal: 0,
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
-    }
-  },
-  getCookiesPerHour: function () {
-    for (let i = 0; i < this.custPerHour.length; i++) {
-      this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
-    }
-  },
-  getCookiesTotal: function () {
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-      this.cookiesTotal += this.cookiesPerHour[i];
-    }
-  },
-};
-locObjects.push(seattle);
+constructorLoop(storeDataTable);
+console.log(storeArray);
 
-const tokyo = {
-  location: 'Tokyo',
-  minCust: 3,
-  maxCust: 24,
-  avgCookieSale: 1.2,
-  custPerHour: [],
-  cookiesPerHour: [],
-  cookiesTotal: 0,
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
-    }
-  },
-  getCookiesPerHour: function () {
-    for (let i = 0; i < this.custPerHour.length; i++) {
-      this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
-    }
-  },
-  getCookiesTotal: function () {
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-      this.cookiesTotal += this.cookiesPerHour[i];
-    }
-  },
-};
-locObjects.push(tokyo);
-
-const dubai = {
-  location: 'Dubai',
-  minCust: 11,
-  maxCust: 38,
-  avgCookieSale: 3.7,
-  custPerHour: [],
-  cookiesPerHour: [],
-  cookiesTotal: 0,
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
-    }
-  },
-  getCookiesPerHour: function () {
-    for (let i = 0; i < this.custPerHour.length; i++) {
-      this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
-    }
-  },
-  getCookiesTotal: function () {
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-      this.cookiesTotal += this.cookiesPerHour[i];
-    }
-  },
-};
-locObjects.push(dubai);
-
-const paris = {
-  location: 'Paris',
-  minCust: 20,
-  maxCust: 38,
-  avgCookieSale: 2.3,
-  custPerHour: [],
-  cookiesPerHour: [],
-  cookiesTotal: 0,
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
-    }
-  },
-  getCookiesPerHour: function () {
-    for (let i = 0; i < this.custPerHour.length; i++) {
-      this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
-    }
-  },
-  getCookiesTotal: function () {
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-      this.cookiesTotal += this.cookiesPerHour[i];
-    }
-  },
-};
-locObjects.push(paris);
-
-const lima = {
-  location: 'Lima',
-  minCust: 2,
-  maxCust: 16,
-  avgCookieSale: 4.6,
-  custPerHour: [],
-  cookiesPerHour: [],
-  cookiesTotal: 0,
-  getCustPerHour: function () {
-    for (let i = 0; i < hours.length; i++) {
-      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
-    }
-  },
-  getCookiesPerHour: function () {
-    for (let i = 0; i < this.custPerHour.length; i++) {
-      this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
-    }
-  },
-  getCookiesTotal: function () {
-    for (let i = 0; i < this.cookiesPerHour.length; i++) {
-      this.cookiesTotal += this.cookiesPerHour[i];
-    }
-  },
-};
-locObjects.push(lima);
-*/
-
-getLocationHourlyData(locObjects);
-appendSalesData(locObjects);
+getLocationHourlyData(storeArray);
+appendSalesData(storeArray);
 
 // HELPER FUNCTIONS
 
@@ -210,7 +93,7 @@ appendSalesData(locObjects);
 //   }
 // }
 
-function appendSalesData(locArr){
+function appendSalesData(locArr) {
   for (let i = 0; i < locArr.length; i++) {
     appendSingleLoc(locArr[i]);
   }
@@ -244,6 +127,6 @@ function getLocationHourlyData(locArr) {
     locArr[i].getCustPerHour();
     locArr[i].getCookiesPerHour();
     locArr[i].getCookiesTotal();
-    console.log(locArr[i]);
+    // console.log(locArr[i]);
   }
 }
