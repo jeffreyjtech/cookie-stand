@@ -1,7 +1,23 @@
 'use strict';
 // Jeffrey Jenkins; Code 201 Week 2 Project "Salmon Cookies"; Created 1-17-21
 
-const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+const hours = [
+  '6am',
+  '7am',
+  '8am',
+  '9am',
+  '10am',
+  '11am',
+  '12pm',
+  '1pm',
+  '2pm',
+  '3pm',
+  '4pm',
+  '5pm',
+  '6pm',
+  '7pm',
+  '8pm',
+];
 
 let dataDisplayElem = document.getElementById('dataDisplay');
 
@@ -16,7 +32,7 @@ let locDataTable = [
 */
 
 // this array will store the location objects, so I can use for loops later in the code to keep things dry.
-let locObjects = [];
+const locObjects = [];
 
 // cph means customers per hour
 
@@ -27,7 +43,7 @@ const seattle = {
   avgCookieSale: 6.3,
   custPerHour: [],
   cookiesPerHour: [],
-  cookiesTotal: null,
+  cookiesTotal: 0,
   getCustPerHour: function () {
     for (let i = 0; i < hours.length; i++) {
       this.custPerHour.push(randomCust(this.minCust, this.maxCust));
@@ -42,7 +58,7 @@ const seattle = {
     for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
-  }
+  },
 };
 locObjects.push(seattle);
 
@@ -53,7 +69,7 @@ const tokyo = {
   avgCookieSale: 1.2,
   custPerHour: [],
   cookiesPerHour: [],
-  cookiesTotal: null,
+  cookiesTotal: 0,
   getCustPerHour: function () {
     for (let i = 0; i < hours.length; i++) {
       this.custPerHour.push(randomCust(this.minCust, this.maxCust));
@@ -68,7 +84,7 @@ const tokyo = {
     for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
-  }
+  },
 };
 locObjects.push(tokyo);
 
@@ -79,7 +95,7 @@ const dubai = {
   avgCookieSale: 3.7,
   custPerHour: [],
   cookiesPerHour: [],
-  cookiesTotal: null,
+  cookiesTotal: 0,
   getCustPerHour: function () {
     for (let i = 0; i < hours.length; i++) {
       this.custPerHour.push(randomCust(this.minCust, this.maxCust));
@@ -94,7 +110,7 @@ const dubai = {
     for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
-  }
+  },
 };
 locObjects.push(dubai);
 
@@ -105,7 +121,7 @@ const paris = {
   avgCookieSale: 2.3,
   custPerHour: [],
   cookiesPerHour: [],
-  cookiesTotal: null,
+  cookiesTotal: 0,
   getCustPerHour: function () {
     for (let i = 0; i < hours.length; i++) {
       this.custPerHour.push(randomCust(this.minCust, this.maxCust));
@@ -120,7 +136,7 @@ const paris = {
     for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
-  }
+  },
 };
 locObjects.push(paris);
 
@@ -131,7 +147,7 @@ const lima = {
   avgCookieSale: 4.6,
   custPerHour: [],
   cookiesPerHour: [],
-  cookiesTotal: null,
+  cookiesTotal: 0,
   getCustPerHour: function () {
     for (let i = 0; i < hours.length; i++) {
       this.custPerHour.push(randomCust(this.minCust, this.maxCust));
@@ -146,22 +162,28 @@ const lima = {
     for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
-  }
+  },
 };
 locObjects.push(lima);
 
 getLocationHourlyData(locObjects);
-appendSalesData(locObjects);
+document.appendSalesData(locObjects);
 
 // HELPER FUNCTIONS
 
-function appendSalesData(locArr) {
-  for (let i = 0; i < locArr.length; i++) {
-    appendSingleLocData(locArr[i]);
-  }
-}
+// function appendSalesData(locArr) {
+//   for (let i = 0; i < locArr.length; i++) {
+//     appendSingleLoc(locArr[i]);
+//   }
+// }
 
-function appendSingleLocData(loc) {
+document.appendSalesData = function(locArr){
+  for (let i = 0; i < locArr.length; i++) {
+    appendSingleLoc(locArr[i]);
+  }
+};
+
+function appendSingleLoc(loc) {
   let h2Elem = document.createElement('h2');
   h2Elem.textContent = loc.location;
   dataDisplayElem.appendChild(h2Elem);
