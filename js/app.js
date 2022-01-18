@@ -36,6 +36,38 @@ const locObjects = [];
 
 // cph means customers per hour
 
+// Store constructor
+
+function Store(location, minCust, maxCust, avgCookieSale) {
+  this.location = location;
+  this.minCust = minCust;
+  this.maxCust = maxCust;
+  this.avgCookieSale = avgCookieSale;
+  this.custPerHour = [];
+  this.cookiesPerHour = [];
+  this.cookiesTotal = 0;
+  locObjects.push(this);
+}
+
+Store.prototype.getCustPerHour = function() {
+  for (let i = 0; i < hours.length; i++) {
+    this.custPerHour.push(randomCust(this.minCust, this.maxCust));
+  }
+};
+
+Store.prototype.getCookiesPerHour = function() {
+  for (let i = 0; i < this.custPerHour.length; i++) {
+    this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
+  }
+};
+
+Store.prototype.getCookiesTotal = function() {
+  for (let i = 0; i < this.cookiesPerHour.length; i++) {
+    this.cookiesTotal += this.cookiesPerHour[i];
+  }
+};
+
+/*
 const seattle = {
   location: 'Seattle',
   minCust: 23,
@@ -165,9 +197,10 @@ const lima = {
   },
 };
 locObjects.push(lima);
+*/
 
 getLocationHourlyData(locObjects);
-document.appendSalesData(locObjects);
+appendSalesData(locObjects);
 
 // HELPER FUNCTIONS
 
@@ -177,11 +210,11 @@ document.appendSalesData(locObjects);
 //   }
 // }
 
-document.appendSalesData = function(locArr){
+function appendSalesData(locArr){
   for (let i = 0; i < locArr.length; i++) {
     appendSingleLoc(locArr[i]);
   }
-};
+}
 
 function appendSingleLoc(loc) {
   let h2Elem = document.createElement('h2');
