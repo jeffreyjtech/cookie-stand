@@ -1,7 +1,9 @@
 'use strict';
 // Jeffrey Jenkins; Code 201 Week 2 Project "Salmon Cookies"; Created 1-17-21
 
-const hours = ['6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm'];
+const hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
+
+let dataDisplayElem = document.getElementById('dataDisplay');
 
 // I'm making a table of location data. I'm sure I'll need this or a component array in later iterations of this site
 /*
@@ -26,18 +28,18 @@ const seattle = {
   custPerHour: [],
   cookiesPerHour: [],
   cookiesTotal: null,
-  getCustPerHour: function(){
-    for(let i = 0; i < hours.length; i++){
-      this.custPerHour.push(randomCust(this.minCust,this.maxCust));
+  getCustPerHour: function () {
+    for (let i = 0; i < hours.length; i++) {
+      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
     }
   },
-  getCookiesPerHour: function(){
-    for(let i = 0; i < this.custPerHour.length; i++){
+  getCookiesPerHour: function () {
+    for (let i = 0; i < this.custPerHour.length; i++) {
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
     }
   },
-  getCookiesTotal: function(){
-    for (let i = 0; i < this.cookiesPerHour.length; i++){
+  getCookiesTotal: function () {
+    for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
@@ -52,18 +54,18 @@ const tokyo = {
   custPerHour: [],
   cookiesPerHour: [],
   cookiesTotal: null,
-  getCustPerHour: function(){
-    for(let i = 0; i < hours.length; i++){
-      this.custPerHour.push(randomCust(this.minCust,this.maxCust));
+  getCustPerHour: function () {
+    for (let i = 0; i < hours.length; i++) {
+      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
     }
   },
-  getCookiesPerHour: function(){
-    for(let i = 0; i < this.custPerHour.length; i++){
+  getCookiesPerHour: function () {
+    for (let i = 0; i < this.custPerHour.length; i++) {
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
     }
   },
-  getCookiesTotal: function(){
-    for (let i = 0; i < this.cookiesPerHour.length; i++){
+  getCookiesTotal: function () {
+    for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
@@ -78,18 +80,18 @@ const dubai = {
   custPerHour: [],
   cookiesPerHour: [],
   cookiesTotal: null,
-  getCustPerHour: function(){
-    for(let i = 0; i < hours.length; i++){
-      this.custPerHour.push(randomCust(this.minCust,this.maxCust));
+  getCustPerHour: function () {
+    for (let i = 0; i < hours.length; i++) {
+      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
     }
   },
-  getCookiesPerHour: function(){
-    for(let i = 0; i < this.custPerHour.length; i++){
+  getCookiesPerHour: function () {
+    for (let i = 0; i < this.custPerHour.length; i++) {
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
     }
   },
-  getCookiesTotal: function(){
-    for (let i = 0; i < this.cookiesPerHour.length; i++){
+  getCookiesTotal: function () {
+    for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
@@ -104,18 +106,18 @@ const paris = {
   custPerHour: [],
   cookiesPerHour: [],
   cookiesTotal: null,
-  getCustPerHour: function(){
-    for(let i = 0; i < hours.length; i++){
-      this.custPerHour.push(randomCust(this.minCust,this.maxCust));
+  getCustPerHour: function () {
+    for (let i = 0; i < hours.length; i++) {
+      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
     }
   },
-  getCookiesPerHour: function(){
-    for(let i = 0; i < this.custPerHour.length; i++){
+  getCookiesPerHour: function () {
+    for (let i = 0; i < this.custPerHour.length; i++) {
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
     }
   },
-  getCookiesTotal: function(){
-    for (let i = 0; i < this.cookiesPerHour.length; i++){
+  getCookiesTotal: function () {
+    for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
@@ -130,18 +132,18 @@ const lima = {
   custPerHour: [],
   cookiesPerHour: [],
   cookiesTotal: null,
-  getCustPerHour: function(){
-    for(let i = 0; i < hours.length; i++){
-      this.custPerHour.push(randomCust(this.minCust,this.maxCust));
+  getCustPerHour: function () {
+    for (let i = 0; i < hours.length; i++) {
+      this.custPerHour.push(randomCust(this.minCust, this.maxCust));
     }
   },
-  getCookiesPerHour: function(){
-    for(let i = 0; i < this.custPerHour.length; i++){
+  getCookiesPerHour: function () {
+    for (let i = 0; i < this.custPerHour.length; i++) {
       this.cookiesPerHour.push(this.custPerHour[i] * this.avgCookieSale);
     }
   },
-  getCookiesTotal: function(){
-    for (let i = 0; i < this.cookiesPerHour.length; i++){
+  getCookiesTotal: function () {
+    for (let i = 0; i < this.cookiesPerHour.length; i++) {
       this.cookiesTotal += this.cookiesPerHour[i];
     }
   }
@@ -149,15 +151,41 @@ const lima = {
 locObjects.push(lima);
 
 getLocationHourlyData(locObjects);
+appendSalesData(locObjects);
 
 // HELPER FUNCTIONS
 
+function appendSalesData(locArr) {
+  for (let i = 0; i < locArr.length; i++) {
+    appendSingleLocData(locArr[i]);
+  }
+}
+
+function appendSingleLocData(loc) {
+  let h2Elem = document.createElement('h2');
+  h2Elem.textContent = loc.location;
+  dataDisplayElem.appendChild(h2Elem);
+
+  let ulElem = document.createElement('ul');
+  dataDisplayElem.appendChild(ulElem);
+
+  for (let j = 0; j < loc.custPerHour.length; j++) {
+    let liElem = document.createElement('li');
+    liElem.textContent = `${hours[j]}: ${loc.cookiesPerHour[j]} cookies`;
+    ulElem.appendChild(liElem);
+  }
+
+  let totalElem = document.createElement('li');
+  totalElem.textContent = `Total: ${loc.cookiesTotal} cookies`;
+  ulElem.appendChild(totalElem);
+}
+
 function randomCust(min, max) {
-  return Math.round(Math.random() * (max-min) + min);
+  return Math.round(Math.random() * (max - min) + min);
 }
 
 function getLocationHourlyData(locArr) {
-  for (let i = 0; i < locArr.length; i++){
+  for (let i = 0; i < locArr.length; i++) {
     locArr[i].getCustPerHour();
     locArr[i].getCookiesPerHour();
     locArr[i].getCookiesTotal();
