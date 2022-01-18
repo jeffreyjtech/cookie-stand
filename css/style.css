@@ -1,0 +1,14 @@
+section{
+  padding: 0.5em;
+}
+h2 {
+  margin: 0.5em 0px;
+  font-size: large;
+  font-weight: bold;
+}
+ul {
+  list-style: disc;
+}
+li {
+  margin-left: 2em;
+}
