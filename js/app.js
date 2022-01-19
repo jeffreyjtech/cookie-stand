@@ -19,8 +19,9 @@ const hours = [
   '8pm',
 ];
 
-let totalCookiesPerHour = [];
 let salesTableElem = document.getElementById('salesTable');
+
+let totalCookiesPerHour = [];
 
 // I'm making a table of each store's customer and cookies-per-customer data. I'm sure I'll need this or a component array in later iterations of this site
 
@@ -48,9 +49,11 @@ function Store(location, minCust, maxCust, avgCookieSale) {
 }
 
 // This function calls the constructor function using passed-in array of store data, then pushes the returned object into the storeArray
+// With this function I can construct objects from any number of stores.
+// I can even pass in a single location's data as single-row 2D array to get it constructed and pushed into the storeArray
 
 function constructorLoop(dataArray) {
-  console.table(dataArray);
+  // console.table(dataArray);
   for (let i = 0; i < dataArray.length; i++) {
     let newStore = new Store(
       dataArray[i][0],
@@ -82,6 +85,25 @@ Store.prototype.getCookiesTotal = function () {
   }
 };
 
+Store.prototype.addRowToTable = function () {
+  let storeRowElem = document.createElement('tr');
+  salesTableElem.appendChild(storeRowElem);
+
+  let storeRowLabelElem = document.createElement('td');
+  storeRowLabelElem.textContent = this.location;
+  storeRowElem.appendChild(storeRowLabelElem);
+
+  for (let j = 0; j < this.custPerHour.length; j++) {
+    let cookiesElem = document.createElement('td');
+    cookiesElem.textContent = `${this.cookiesPerHour[j]}`;
+    storeRowElem.appendChild(cookiesElem);
+  }
+
+  let storeDailyTotalElem = document.createElement('td');
+  storeDailyTotalElem.textContent = this.cookiesTotal;
+  storeRowElem.appendChild(storeDailyTotalElem);
+};
+
 constructorLoop(storeDataTable);
 console.log(storeArray);
 
@@ -96,7 +118,7 @@ DOM MANIPULATION FUNCTIONS
 function appendSalesData(locArr) {
   appendTableHeader();
   for (let i = 0; i < locArr.length; i++) {
-    appendSingleLoc(locArr[i]);
+    locArr[i].addRowToTable();
   }
   appendTableFooter();
 }
@@ -116,25 +138,6 @@ function appendTableHeader() {
   let storeDailyTotalLabel = document.createElement('th');
   storeDailyTotalLabel.textContent = 'Daily Location Total';
   headerRowElem.appendChild(storeDailyTotalLabel);
-}
-
-function appendSingleLoc(loc) {
-  let storeRowElem = document.createElement('tr');
-  salesTableElem.appendChild(storeRowElem);
-
-  let storeRowLabelElem = document.createElement('td');
-  storeRowLabelElem.textContent = loc.location;
-  storeRowElem.appendChild(storeRowLabelElem);
-
-  for (let j = 0; j < loc.custPerHour.length; j++) {
-    let cookiesElem = document.createElement('td');
-    cookiesElem.textContent = `${loc.cookiesPerHour[j]}`;
-    storeRowElem.appendChild(cookiesElem);
-  }
-
-  let storeDailyTotalElem = document.createElement('td');
-  storeDailyTotalElem.textContent = loc.cookiesTotal;
-  storeRowElem.appendChild(storeDailyTotalElem);
 }
 
 function appendTableFooter() {
