@@ -1,0 +1,31 @@
+table{
+  text-align: left;
+}
+th, td {
+  border: solid thin gray;
+  padding: 0.7em;
+  width: 5em;
+}
+th{
+  border-top: none;
+}
+th:first-child{
+  border-left: none;
+  border-top: none;
+}
+th:last-child{
+  border-right: none;
+  border-top: none;
+}
+th {
+  vertical-align: middle;
+}
+td:last-child{
+  border-right: none;
+}
+td:first-child{
+  border-left: none;
+}
+tr:last-child td{
+  border-bottom: none;
+}
