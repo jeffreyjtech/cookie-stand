@@ -12,3 +12,18 @@ ul {
 li {
   margin-left: 2em;
 }
+section{
+  border: solid thick black;
+  border-radius: 30px;
+}
+table{
+  text-align: left;
+}
+th, td {
+  border: solid thin gray;
+  padding: 0.7em;
+  width: 5em;
+}
+th {
+  vertical-align: middle;
+}
