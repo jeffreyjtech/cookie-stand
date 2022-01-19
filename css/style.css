@@ -15,6 +15,7 @@ li {
 section{
   border: solid thick black;
   border-radius: 30px;
+  width: fit-content;
 }
 table{
   text-align: left;

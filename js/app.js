@@ -22,6 +22,7 @@ const hours = [
 let salesTableElem = document.getElementById('salesTable');
 
 let totalCookiesPerHour = [];
+let globalDailyTotal = 0;
 
 // I'm making a table of each store's customer and cookies-per-customer data. I'm sure I'll need this or a component array in later iterations of this site
 
@@ -45,7 +46,7 @@ function Store(location, minCust, maxCust, avgCookieSale) {
   this.avgCookieSale = avgCookieSale;
   this.custPerHour = [];
   this.cookiesPerHour = [];
-  this.cookiesTotal = 0;
+  this.dailyTotal = 0;
 }
 
 // This function calls the constructor function using passed-in array of store data, then pushes the returned object into the storeArray
@@ -79,9 +80,9 @@ Store.prototype.getCookiesPerHour = function () {
   }
 };
 
-Store.prototype.getCookiesTotal = function () {
+Store.prototype.getDailyTotal = function () {
   for (let i = 0; i < this.cookiesPerHour.length; i++) {
-    this.cookiesTotal += this.cookiesPerHour[i];
+    this.dailyTotal += this.cookiesPerHour[i];
   }
 };
 
@@ -100,7 +101,7 @@ Store.prototype.addRowToTable = function () {
   }
 
   let storeDailyTotalElem = document.createElement('td');
-  storeDailyTotalElem.textContent = this.cookiesTotal;
+  storeDailyTotalElem.textContent = this.dailyTotal;
   storeRowElem.appendChild(storeDailyTotalElem);
 };
 
@@ -144,23 +145,31 @@ function appendTableFooter() {
   let footerRowElem = document.createElement('tr');
   salesTableElem.appendChild(footerRowElem);
 
-  let totalsLabelElem = document.createElement('th');
+  let totalsLabelElem = document.createElement('td');
   totalsLabelElem.textContent = 'Totals';
   footerRowElem.appendChild(totalsLabelElem);
+
   for (let i = 0; i < hours.length; i++) {
-    let totalPerHourElem = document.createElement('th');
+    let totalPerHourElem = document.createElement('td');
     totalPerHourElem.textContent = totalCookiesPerHour[i];
     footerRowElem.appendChild(totalPerHourElem);
   }
+
+  let globalDailyTotalElem = document.createElement('td');
+  globalDailyTotalElem.textContent = globalDailyTotal;
+  footerRowElem.append(globalDailyTotalElem);
 }
 
 /*
 OTHER HELPER FUNCTIONS
 */
 
+
 function getGlobalCPerHour(locArr) {
   for (let i = 0; i < hours.length; i++) {
-    totalCookiesPerHour.push(getGlobalCookies(i, locArr));
+    let globalHourlyTotal = getGlobalCookies(i, locArr);
+    totalCookiesPerHour.push(globalHourlyTotal);
+    globalDailyTotal += globalHourlyTotal;
   }
 }
 
@@ -180,7 +189,7 @@ function getLocationHourlyData(locArr) {
   for (let i = 0; i < locArr.length; i++) {
     locArr[i].getCustPerHour();
     locArr[i].getCookiesPerHour();
-    locArr[i].getCookiesTotal();
+    locArr[i].getDailyTotal();
     // console.log(locArr[i]);
   }
 }
