@@ -7,7 +7,7 @@ th {
 }
 th,
 td {
-  border: solid thin gray;
+  border: solid thin rgb(170, 170, 170);
   padding: 0.7em;
   width: 5em;
 }
@@ -18,12 +18,12 @@ tr:first-child th {
 th:first-child,
 td:first-child {
   border-left: none;
-  border-right: 3px solid black;
+  border-right: 2px solid black;
 }
 th:last-child,
 td:last-child {
   border-right: none;
-  border-left: 3px solid black;
+  border-left: 2px solid black;
 }
 th {
   vertical-align: middle;
