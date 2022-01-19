@@ -110,18 +110,18 @@ console.log(storeArray);
 
 getLocationHourlyData(storeArray);
 getGlobalCPerHour(storeArray);
+appendTableHeader();
 appendSalesData(storeArray);
+appendTableFooter();
 
 /*
 DOM MANIPULATION FUNCTIONS
 */
 
 function appendSalesData(locArr) {
-  appendTableHeader();
   for (let i = 0; i < locArr.length; i++) {
     locArr[i].addRowToTable();
   }
-  appendTableFooter();
 }
 
 function appendTableHeader() {
@@ -145,17 +145,17 @@ function appendTableFooter() {
   let footerRowElem = document.createElement('tr');
   salesTableElem.appendChild(footerRowElem);
 
-  let totalsLabelElem = document.createElement('td');
+  let totalsLabelElem = document.createElement('th');
   totalsLabelElem.textContent = 'Totals';
   footerRowElem.appendChild(totalsLabelElem);
 
   for (let i = 0; i < hours.length; i++) {
-    let totalPerHourElem = document.createElement('td');
+    let totalPerHourElem = document.createElement('th');
     totalPerHourElem.textContent = totalCookiesPerHour[i];
     footerRowElem.appendChild(totalPerHourElem);
   }
 
-  let globalDailyTotalElem = document.createElement('td');
+  let globalDailyTotalElem = document.createElement('th');
   globalDailyTotalElem.textContent = globalDailyTotal;
   footerRowElem.append(globalDailyTotalElem);
 }
