@@ -146,7 +146,7 @@ function appendTableFooter() {
   salesTableElem.appendChild(footerRowElem);
 
   let totalsLabelElem = document.createElement('th');
-  totalsLabelElem.textContent = 'Totals';
+  totalsLabelElem.textContent = 'Global Totals';
   footerRowElem.appendChild(totalsLabelElem);
 
   for (let i = 0; i < hours.length; i++) {
