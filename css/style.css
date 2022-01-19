@@ -17,14 +17,3 @@ section{
   border-radius: 30px;
   width: fit-content;
 }
-table{
-  text-align: left;
-}
-th, td {
-  border: solid thin gray;
-  padding: 0.7em;
-  width: 5em;
-}
-th {
-  vertical-align: middle;
-}
