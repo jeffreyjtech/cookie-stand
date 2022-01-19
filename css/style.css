@@ -10,9 +10,3 @@ ul {
 li {
   margin-left: 2em;
 }
-section{
-  border: solid thick black;
-  border-radius: 30px;
-  width: fit-content;
-  padding: 0.3em;
-}
