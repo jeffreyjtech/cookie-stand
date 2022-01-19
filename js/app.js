@@ -20,7 +20,6 @@ const hours = [
 ];
 
 let totalCookiesPerHour = [];
-let dataDisplayElem = document.getElementById('dataDisplay');
 let salesTableElem = document.getElementById('salesTable');
 
 // I'm making a table of each store's customer and cookies-per-customer data. I'm sure I'll need this or a component array in later iterations of this site
@@ -91,7 +90,7 @@ getGlobalCPerHour(storeArray);
 appendSalesData(storeArray);
 
 /*
-HELPER FUNCTIONS
+DOM MANIPULATION FUNCTIONS
 */
 
 function appendSalesData(locArr) {
@@ -119,34 +118,6 @@ function appendTableHeader() {
   headerRowElem.appendChild(storeDailyTotalLabel);
 }
 
-function appendTableFooter() {
-  let footerRowElem = document.createElement('tr');
-  salesTableElem.appendChild(footerRowElem);
-
-  let totalsLabelElem = document.createElement('th');
-  totalsLabelElem.textContent = 'Totals';
-  footerRowElem.appendChild(totalsLabelElem);
-  for (let i = 0; i < hours.length; i++) {
-    let totalPerHourElem = document.createElement('th');
-    totalPerHourElem.textContent = totalCookiesPerHour[i];
-    footerRowElem.appendChild(totalPerHourElem);
-  }
-}
-
-function getGlobalCPerHour(locArr) {
-  for (let i = 0; i < hours.length; i++) {
-    totalCookiesPerHour.push(getGlobalCookies(i, locArr));
-  }
-}
-
-function getGlobalCookies(hour, locArr) {
-  let globalCookies = 0;
-  for (let j = 0; j < locArr.length; j++) {
-    globalCookies += locArr[j].cookiesPerHour[hour];
-  }
-  return globalCookies;
-}
-
 function appendSingleLoc(loc) {
   let storeRowElem = document.createElement('tr');
   salesTableElem.appendChild(storeRowElem);
@@ -164,6 +135,38 @@ function appendSingleLoc(loc) {
   let storeDailyTotalElem = document.createElement('td');
   storeDailyTotalElem.textContent = loc.cookiesTotal;
   storeRowElem.appendChild(storeDailyTotalElem);
+}
+
+function appendTableFooter() {
+  let footerRowElem = document.createElement('tr');
+  salesTableElem.appendChild(footerRowElem);
+
+  let totalsLabelElem = document.createElement('th');
+  totalsLabelElem.textContent = 'Totals';
+  footerRowElem.appendChild(totalsLabelElem);
+  for (let i = 0; i < hours.length; i++) {
+    let totalPerHourElem = document.createElement('th');
+    totalPerHourElem.textContent = totalCookiesPerHour[i];
+    footerRowElem.appendChild(totalPerHourElem);
+  }
+}
+
+/*
+OTHER HELPER FUNCTIONS
+*/
+
+function getGlobalCPerHour(locArr) {
+  for (let i = 0; i < hours.length; i++) {
+    totalCookiesPerHour.push(getGlobalCookies(i, locArr));
+  }
+}
+
+function getGlobalCookies(hour, locArr) {
+  let globalCookies = 0;
+  for (let j = 0; j < locArr.length; j++) {
+    globalCookies += locArr[j].cookiesPerHour[hour];
+  }
+  return globalCookies;
 }
 
 function randomCust(min, max) {
