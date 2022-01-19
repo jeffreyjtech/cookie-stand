@@ -1,6 +1,4 @@
-section{
-  padding: 0.5em;
-}
+
 h2 {
   margin: 0.5em 0px;
   font-size: large;
@@ -16,4 +14,5 @@ section{
   border: solid thick black;
   border-radius: 30px;
   width: fit-content;
+  padding: 0.3em;
 }
