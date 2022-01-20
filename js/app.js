@@ -20,7 +20,8 @@ const hours = [
 ];
 
 let salesTableElem = document.getElementById('salesTable');
-
+let storeRowGroupElem = document.getElementById('storeRowGroup');
+let addStoreForm = document.getElementById('addStoreForm');
 let globalCookiesPerHour = [];
 let globalDailyTotal = 0;
 
@@ -88,7 +89,7 @@ Store.prototype.getDailyTotal = function () {
 
 Store.prototype.addRowToTable = function () {
   let storeRowElem = document.createElement('tr');
-  salesTableElem.appendChild(storeRowElem);
+  storeRowGroupElem.appendChild(storeRowElem);
 
   let storeRowLabelElem = document.createElement('td');
   storeRowLabelElem.textContent = this.location;
@@ -109,16 +110,49 @@ constructorLoop(storeDataTable);
 console.log(storeArray);
 
 getLocationHourlyData(storeArray);
-getGlobalCPerHour(storeArray);
+addGlobalCPerHour();
 appendTableHeader();
-appendSalesData(storeArray);
+addNewSalesData(storeArray);
 appendTableFooter();
+
+addStoreForm.addEventListener('submit', handleSubmit);
+
+/*
+FORM SUBMISSION EVENT HANDLER
+*/
+
+function handleSubmit(event){
+  event.preventDefault();
+  console.log(event);
+
+  let formArray = [
+    [event.target.storeName.value,
+      parseInt(event.target.minCust.value),
+      parseInt(event.target.maxCust.value),
+      parseInt(event.target.avgCookies.value)]
+  ];
+
+  constructorLoop(formArray);
+
+  let newStore = [storeArray[storeArray.length-1]];
+
+  getLocationHourlyData(newStore);
+  addNewSalesData(newStore);
+  console.table(storeArray);
+  refreshFooter();
+}
+
+function refreshFooter(){
+  addGlobalCPerHour();
+  salesTableElem.removeChild(document.getElementById('hourlyTotalRow'));
+  appendTableFooter();
+}
 
 /*
 DOM MANIPULATION FUNCTIONS
 */
 
-function appendSalesData(locArr) {
+function addNewSalesData(locArr) {
   for (let i = 0; i < locArr.length; i++) {
     locArr[i].addRowToTable();
   }
@@ -157,6 +191,7 @@ function appendTableFooter() {
 
   let globalDailyTotalElem = document.createElement('th');
   globalDailyTotalElem.textContent = globalDailyTotal;
+  footerRowElem.setAttribute('id', 'hourlyTotalRow');
   footerRowElem.append(globalDailyTotalElem);
 }
 
@@ -165,18 +200,19 @@ OTHER HELPER FUNCTIONS
 */
 
 
-function getGlobalCPerHour(locArr) {
+function addGlobalCPerHour() {
+  globalDailyTotal = 0;
   for (let i = 0; i < hours.length; i++) {
-    let globalHourlyTotal = getGlobalCookies(i, locArr);
-    globalCookiesPerHour.push(globalHourlyTotal);
+    let globalHourlyTotal = getGlobalCookies(i);
+    globalCookiesPerHour[i] = globalHourlyTotal;
     globalDailyTotal += globalHourlyTotal;
   }
 }
 
-function getGlobalCookies(hour, locArr) {
+function getGlobalCookies(hour) {
   let globalCookies = 0;
-  for (let j = 0; j < locArr.length; j++) {
-    globalCookies += locArr[j].cookiesPerHour[hour];
+  for (let j = 0; j < storeArray.length; j++) {
+    globalCookies += storeArray[j].cookiesPerHour[hour];
   }
   return globalCookies;
 }
