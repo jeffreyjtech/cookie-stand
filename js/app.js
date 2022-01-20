@@ -139,12 +139,12 @@ function handleSubmit(event){
 
   getLocationHourlyData(newStore);
   addNewSalesData(newStore);
+  addGlobalCPerHour();
   console.table(storeArray);
   refreshFooter();
 }
 
 function refreshFooter(){
-  addGlobalCPerHour();
   salesTableElem.removeChild(document.getElementById('hourlyTotalRow'));
   appendTableFooter();
 }
