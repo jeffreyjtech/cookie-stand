@@ -1,4 +1,30 @@
-
+img{
+  display: inline-block;
+}
+header{
+  background-color: rgb(221, 158, 151);
+}
+nav{
+  padding-top: 15px;
+  display: block;
+  text-align: center;
+  width: max-content;
+  margin: auto;
+  height: 100px;
+}
+nav *{
+  display: inline-block;
+}
+nav img{
+  width: 220px;
+  height: 80px;
+}
+h1{
+  font-size: 40px;
+  position: relative;
+  bottom: 25px;
+  font-family: 'Amatic SC', cursive;
+}
 h2 {
   margin: 0.5em 0px;
   font-size: large;
