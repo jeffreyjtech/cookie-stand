@@ -26,3 +26,7 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 - I really feel like the doors are opening on what I can do with JavaScript.
 
 ### Lab 08
+
+- The CSS for this iteration of the site was a challenge. I took just enough time to get the homepage laid out *reasonably* well. Shout-out to my classmate, Nicholas M., for helping out with the wireframe lab (I'll add a link to his GitHub when I find it), which I completed before starting on this. The wisdom he shared was crucial to completing both labs.
+- The site is lacking the finer CSS tweaks to make the site attractive, but I'll make time for that before final submission.
+- Fortunately, I had all the JavaScript components completed in Lab 07 (not including stretch goals), so that was
