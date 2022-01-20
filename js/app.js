@@ -21,7 +21,7 @@ const hours = [
 
 let salesTableElem = document.getElementById('salesTable');
 
-let totalCookiesPerHour = [];
+let globalCookiesPerHour = [];
 let globalDailyTotal = 0;
 
 // I'm making a table of each store's customer and cookies-per-customer data. I'm sure I'll need this or a component array in later iterations of this site
@@ -146,12 +146,12 @@ function appendTableFooter() {
   salesTableElem.appendChild(footerRowElem);
 
   let totalsLabelElem = document.createElement('th');
-  totalsLabelElem.textContent = 'Totals';
+  totalsLabelElem.textContent = 'Global Totals';
   footerRowElem.appendChild(totalsLabelElem);
 
   for (let i = 0; i < hours.length; i++) {
     let totalPerHourElem = document.createElement('th');
-    totalPerHourElem.textContent = totalCookiesPerHour[i];
+    totalPerHourElem.textContent = globalCookiesPerHour[i];
     footerRowElem.appendChild(totalPerHourElem);
   }
 
@@ -168,7 +168,7 @@ OTHER HELPER FUNCTIONS
 function getGlobalCPerHour(locArr) {
   for (let i = 0; i < hours.length; i++) {
     let globalHourlyTotal = getGlobalCookies(i, locArr);
-    totalCookiesPerHour.push(globalHourlyTotal);
+    globalCookiesPerHour.push(globalHourlyTotal);
     globalDailyTotal += globalHourlyTotal;
   }
 }

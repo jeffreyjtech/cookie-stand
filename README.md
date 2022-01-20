@@ -6,7 +6,7 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 
 ## Links and Resources
 
-- No links to add currently
+- Used the [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC)
 
 ## Reflections and Comments
 
@@ -23,3 +23,5 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
   - Also, in theory, this allows me to dynamically add more stores to the sales table.
 - Appending a table to the sales page was almost more difficult to code than coding the constructor and contructor loop but I got through it.
 - I really feel like the doors are opening on what I can do with JavaScript.
+
+### Lab 08
