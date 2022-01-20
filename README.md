@@ -7,6 +7,7 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 ## Links and Resources
 
 - Used the [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC)
+- Used [Meyerweb.com's Reset CSS](http://meyerweb.com/eric/tools/css/reset/)
 
 ## Reflections and Comments
 
