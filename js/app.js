@@ -20,6 +20,7 @@ const hours = [
 ];
 
 let salesTableElem = document.getElementById('salesTable');
+let tableHRowElem = document.getElementById('tableHRow');
 let storeRowGroupElem = document.getElementById('storeRowGroup');
 let addStoreForm = document.getElementById('addStoreForm');
 let globalCookiesPerHour = [];
@@ -160,7 +161,7 @@ function addNewSalesData(locArr) {
 
 function appendTableHeader() {
   let headerRowElem = document.createElement('tr');
-  salesTableElem.appendChild(headerRowElem);
+  tableHRowElem.appendChild(headerRowElem);
 
   let hoursLabelElem = document.createElement('th');
   hoursLabelElem.textContent = 'Hours';
