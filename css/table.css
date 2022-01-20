@@ -4,6 +4,9 @@
   width: fit-content;
   max-width: min-content;
   padding: 0.3em;
+  background: white;
+  margin: auto;
+  margin-top: 30px;
 }
 table {
   font-family: Arial, Helvetica, sans-serif;
@@ -15,7 +18,7 @@ th {
 th,
 td {
   border: solid thin rgb(170, 170, 170);
-  padding: 0.7em;
+  padding: 0.33em;
   width: 5em;
 }
 tr:first-child th {
