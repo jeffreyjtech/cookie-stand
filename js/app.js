@@ -38,6 +38,7 @@ let storeDataTable = [
 
 // this array will store the store objects, so I can use for loops later in the code to keep things dry.
 const storeArray = [];
+const storeNames = [];
 
 // Store constructor function
 
@@ -65,31 +66,36 @@ function constructStores(dataArray) {
       dataArray[i][3]
     );
     storeArray.push(newStore);
+    storeNames.push(dataArray[i][0].toLowerCase());
   }
 }
 
 Store.prototype.getCustPerHour = function () {
   for (let i = 0; i < hours.length; i++) {
-    this.custPerHour.push(randomCust(this.minCust, this.maxCust));
+    this.custPerHour[i] = randomCust(this.minCust, this.maxCust);
   }
 };
 
 Store.prototype.getCookiesPerHour = function () {
   for (let i = 0; i < this.custPerHour.length; i++) {
-    this.cookiesPerHour.push(
-      Math.ceil(this.custPerHour[i] * this.avgCookieSale)
-    );
+    this.cookiesPerHour[i] = Math.ceil(this.custPerHour[i] * this.avgCookieSale);
   }
 };
 
 Store.prototype.getDailyTotal = function () {
+  this.dailyTotal = 0;
   for (let i = 0; i < this.cookiesPerHour.length; i++) {
     this.dailyTotal += this.cookiesPerHour[i];
   }
 };
 
 Store.prototype.addRowToTable = function () {
+  storeRowGroupElem.appendChild(this.constructRow());
+};
+
+Store.prototype.constructRow = function () {
   let storeRowElem = document.createElement('tr');
+  storeRowElem.setAttribute('id', this.location);
   storeRowGroupElem.appendChild(storeRowElem);
 
   let storeRowLabelElem = document.createElement('td');
@@ -105,6 +111,13 @@ Store.prototype.addRowToTable = function () {
   let storeDailyTotalElem = document.createElement('td');
   storeDailyTotalElem.textContent = this.dailyTotal;
   storeRowElem.appendChild(storeDailyTotalElem);
+
+  return storeRowElem;
+};
+
+Store.prototype.refreshRow = function () {
+  let oldRow = document.getElementById(this.location);
+  storeRowGroupElem.replaceChild(this.constructRow(), oldRow);
 };
 
 constructStores(storeDataTable);
@@ -122,29 +135,49 @@ addStoreForm.addEventListener('submit', handleSubmit);
 FORM SUBMISSION EVENT HANDLER
 */
 
-function handleSubmit(event){
+function handleSubmit(event) {
   event.preventDefault();
   console.log(event);
 
-  let formArray = [
-    [event.target.storeName.value,
-      parseInt(event.target.minCust.value),
-      parseInt(event.target.maxCust.value),
-      parseInt(event.target.avgCookies.value)]
-  ];
+  const inputStoreName = event.target.storeName.value.toLowerCase();
+  if (storeNames.includes(inputStoreName)) {
+    console.log('This store exists');
+    let storeIndex = storeNames.indexOf(inputStoreName);
 
-  constructStores(formArray);
+    let refreshedStore = [storeArray[storeIndex]];
 
-  let newStore = [storeArray[storeArray.length-1]];
+    storeArray[storeIndex].minCust = parseInt(event.target.minCust.value);
+    storeArray[storeIndex].maxCust = parseInt(event.target.maxCust.value);
+    storeArray[storeIndex].avgCookieSale = parseInt(
+      event.target.avgCookies.value
+    );
 
-  getLocationHourlyData(newStore);
-  addNewSalesData(newStore);
+    getLocationHourlyData(refreshedStore);
+    storeArray[storeIndex].refreshRow();
+  } else {
+    console.log('This store does not exist');
+    let formArray = [
+      [
+        event.target.storeName.value,
+        parseInt(event.target.minCust.value),
+        parseInt(event.target.maxCust.value),
+        parseInt(event.target.avgCookies.value),
+      ],
+    ];
+
+    constructStores(formArray);
+
+    let newStore = [storeArray[storeArray.length - 1]];
+
+    getLocationHourlyData(newStore);
+    addNewSalesData(newStore);
+  }
   addGlobalCPerHour();
   console.table(storeArray);
   refreshFooter();
 }
 
-function refreshFooter(){
+function refreshFooter() {
   salesTableElem.removeChild(document.getElementById('hourlyTotalRow'));
   appendTableFooter();
 }
@@ -199,7 +232,6 @@ function appendTableFooter() {
 /*
 OTHER HELPER FUNCTIONS
 */
-
 
 function addGlobalCPerHour() {
   globalDailyTotal = 0;
