@@ -55,7 +55,7 @@ function Store(location, minCust, maxCust, avgCookieSale) {
 // With this function I can construct objects from any number of stores.
 // I can even pass in a single location's data as single-row 2D array to get it constructed and pushed into the storeArray
 
-function constructorLoop(dataArray) {
+function constructStores(dataArray) {
   // console.table(dataArray);
   for (let i = 0; i < dataArray.length; i++) {
     let newStore = new Store(
@@ -107,7 +107,7 @@ Store.prototype.addRowToTable = function () {
   storeRowElem.appendChild(storeDailyTotalElem);
 };
 
-constructorLoop(storeDataTable);
+constructStores(storeDataTable);
 console.log(storeArray);
 
 getLocationHourlyData(storeArray);
@@ -133,7 +133,7 @@ function handleSubmit(event){
       parseInt(event.target.avgCookies.value)]
   ];
 
-  constructorLoop(formArray);
+  constructStores(formArray);
 
   let newStore = [storeArray[storeArray.length-1]];
 
