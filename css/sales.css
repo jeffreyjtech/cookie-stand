@@ -11,6 +11,9 @@ body{
   margin: auto;
   margin-top: 30px;
 }
+#tableSection h2{
+  margin-left: 1em;
+}
 table {
   text-align: left;
 }
