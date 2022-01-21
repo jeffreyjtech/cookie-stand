@@ -20,8 +20,8 @@ const hours = [
 ];
 
 let salesTableElem = document.getElementById('salesTable');
-let tableHRowElem = document.getElementById('tableHRow');
 let storeRowGroupElem = document.getElementById('storeRowGroup');
+let tHeadElem = document.querySelector('thead');
 let addStoreForm = document.getElementById('addStoreForm');
 let globalCookiesPerHour = [];
 let globalDailyTotal = 0;
@@ -37,13 +37,13 @@ let storeDataTable = [
 ];
 
 // this array will store the store objects, so I can use for loops later in the code to keep things dry.
-const storeArray = [];
-const storeNames = [];
+const globalStores = [];
+const globalStoreNames = [];
 
 // Store constructor function
 
-function Store(location, minCust, maxCust, avgCookieSale) {
-  this.location = location;
+function Store(name, minCust, maxCust, avgCookieSale) {
+  this.name = name;
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgCookieSale = avgCookieSale;
@@ -52,21 +52,22 @@ function Store(location, minCust, maxCust, avgCookieSale) {
   this.dailyTotal = 0;
 }
 
-// This function calls the constructor function using passed-in array of store data, then pushes the returned object into the storeArray
+// This function calls the constructor function using passed-in array of store data, then pushes the returned object into the globalStores
 // With this function I can construct objects from any number of stores.
-// I can even pass in a single location's data as single-row 2D array to get it constructed and pushed into the storeArray
+// I can even pass in a single name's data as single-row 2D array to get it constructed and pushed into the globalStores
 
-function constructStores(dataArray) {
-  // console.table(dataArray);
-  for (let i = 0; i < dataArray.length; i++) {
+function constructStores(newStoreData) {
+  // console.table(newStoreData);
+  for (let i = 0; i < newStoreData.length; i++) {
+    let newStoreName = newStoreData[i][0];
     let newStore = new Store(
-      dataArray[i][0],
-      dataArray[i][1],
-      dataArray[i][2],
-      dataArray[i][3]
+      newStoreName,
+      newStoreData[i][1],
+      newStoreData[i][2],
+      newStoreData[i][3]
     );
-    storeArray.push(newStore);
-    storeNames.push(dataArray[i][0].toLowerCase());
+    globalStores.push(newStore);
+    globalStoreNames.push(newStoreName.toLowerCase());
   }
 }
 
@@ -89,17 +90,14 @@ Store.prototype.getDailyTotal = function () {
   }
 };
 
-Store.prototype.addRowToTable = function () {
-  storeRowGroupElem.appendChild(this.constructRow());
-};
 
 Store.prototype.constructRow = function () {
   let storeRowElem = document.createElement('tr');
-  storeRowElem.setAttribute('id', this.location);
+  storeRowElem.setAttribute('id', this.name);
   storeRowGroupElem.appendChild(storeRowElem);
 
   let storeRowLabelElem = document.createElement('td');
-  storeRowLabelElem.textContent = this.location;
+  storeRowLabelElem.textContent = this.name;
   storeRowElem.appendChild(storeRowLabelElem);
 
   for (let j = 0; j < this.custPerHour.length; j++) {
@@ -115,18 +113,24 @@ Store.prototype.constructRow = function () {
   return storeRowElem;
 };
 
+Store.prototype.addRowToTable = function () {
+  let newRow = this.constructRow();
+  storeRowGroupElem.appendChild(newRow);
+};
+
 Store.prototype.refreshRow = function () {
-  let oldRow = document.getElementById(this.location);
-  storeRowGroupElem.replaceChild(this.constructRow(), oldRow);
+  let refreshedRow = this.constructRow();
+  let oldRow = document.getElementById(this.name);
+  storeRowGroupElem.replaceChild(refreshedRow, oldRow);
 };
 
 constructStores(storeDataTable);
-console.log(storeArray);
+console.log(globalStores);
 
-getLocationHourlyData(storeArray);
+refreshStoresProjections(globalStores);
 addGlobalCPerHour();
 appendTableHeader();
-addNewSalesData(storeArray);
+addNewStoreRows(globalStores);
 appendTableFooter();
 
 addStoreForm.addEventListener('submit', handleSubmit);
@@ -140,20 +144,18 @@ function handleSubmit(event) {
   console.log(event);
 
   const inputStoreName = event.target.storeName.value.toLowerCase();
-  if (storeNames.includes(inputStoreName)) {
+  if (globalStoreNames.includes(inputStoreName)) {
     console.log('This store exists');
-    let storeIndex = storeNames.indexOf(inputStoreName);
+    let storeIndex = globalStoreNames.indexOf(inputStoreName);
 
-    let refreshedStore = [storeArray[storeIndex]];
+    let refreshedStore = [globalStores[storeIndex]];
 
-    storeArray[storeIndex].minCust = parseInt(event.target.minCust.value);
-    storeArray[storeIndex].maxCust = parseInt(event.target.maxCust.value);
-    storeArray[storeIndex].avgCookieSale = parseInt(
-      event.target.avgCookies.value
-    );
+    globalStores[storeIndex].minCust = parseInt(event.target.minCust.value);
+    globalStores[storeIndex].maxCust = parseInt(event.target.maxCust.value);
+    globalStores[storeIndex].avgCookieSale = parseInt(event.target.avgCookies.value);
 
-    getLocationHourlyData(refreshedStore);
-    storeArray[storeIndex].refreshRow();
+    refreshStoresProjections(refreshedStore);
+    globalStores[storeIndex].refreshRow();
   } else {
     console.log('This store does not exist');
     let formArray = [
@@ -167,18 +169,21 @@ function handleSubmit(event) {
 
     constructStores(formArray);
 
-    let newStore = [storeArray[storeArray.length - 1]];
+    let newStore = [globalStores[globalStores.length - 1]];
 
-    getLocationHourlyData(newStore);
-    addNewSalesData(newStore);
+    refreshStoresProjections(newStore);
+    addNewStoreRows(newStore);
   }
   addGlobalCPerHour();
-  console.table(storeArray);
+  console.table(globalStores);
   refreshFooter();
+
+  addStoreForm.reset();
 }
 
 function refreshFooter() {
-  salesTableElem.removeChild(document.getElementById('hourlyTotalRow'));
+  let oldFooter = document.getElementById('footerRow');
+  oldFooter.remove();
   appendTableFooter();
 }
 
@@ -186,15 +191,14 @@ function refreshFooter() {
 DOM MANIPULATION FUNCTIONS
 */
 
-function addNewSalesData(locArr) {
-  for (let i = 0; i < locArr.length; i++) {
-    locArr[i].addRowToTable();
+function addNewStoreRows(storeArr) {
+  for (let i = 0; i < storeArr.length; i++) {
+    storeArr[i].addRowToTable();
   }
 }
 
 function appendTableHeader() {
   let headerRowElem = document.createElement('tr');
-  tableHRowElem.appendChild(headerRowElem);
 
   let hoursLabelElem = document.createElement('th');
   hoursLabelElem.textContent = 'Hours';
@@ -207,6 +211,8 @@ function appendTableHeader() {
   let storeDailyTotalLabel = document.createElement('th');
   storeDailyTotalLabel.textContent = 'Daily Location Total';
   headerRowElem.appendChild(storeDailyTotalLabel);
+
+  tHeadElem.appendChild(headerRowElem);
 }
 
 function appendTableFooter() {
@@ -225,7 +231,7 @@ function appendTableFooter() {
 
   let globalDailyTotalElem = document.createElement('th');
   globalDailyTotalElem.textContent = globalDailyTotal;
-  footerRowElem.setAttribute('id', 'hourlyTotalRow');
+  footerRowElem.setAttribute('id', 'footerRow');
   footerRowElem.append(globalDailyTotalElem);
 }
 
@@ -244,8 +250,8 @@ function addGlobalCPerHour() {
 
 function getGlobalCookies(hour) {
   let globalCookies = 0;
-  for (let j = 0; j < storeArray.length; j++) {
-    globalCookies += storeArray[j].cookiesPerHour[hour];
+  for (let j = 0; j < globalStores.length; j++) {
+    globalCookies += globalStores[j].cookiesPerHour[hour];
   }
   return globalCookies;
 }
@@ -254,11 +260,11 @@ function randomCust(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-function getLocationHourlyData(locArr) {
-  for (let i = 0; i < locArr.length; i++) {
-    locArr[i].getCustPerHour();
-    locArr[i].getCookiesPerHour();
-    locArr[i].getDailyTotal();
+function refreshStoresProjections(storeArr) {
+  for (let i = 0; i < storeArr.length; i++) {
+    storeArr[i].getCustPerHour();
+    storeArr[i].getCookiesPerHour();
+    storeArr[i].getDailyTotal();
     // console.log(locArr[i]);
   }
 }
