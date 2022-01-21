@@ -20,8 +20,8 @@ const hours = [
 ];
 
 let salesTableElem = document.getElementById('salesTable');
-let tableHRowElem = document.getElementById('tableHRow');
 let storeRowGroupElem = document.getElementById('storeRowGroup');
+let tHeadElem = document.querySelector('thead');
 let addStoreForm = document.getElementById('addStoreForm');
 let globalCookiesPerHour = [];
 let globalDailyTotal = 0;
@@ -42,8 +42,8 @@ const globalStoreNames = [];
 
 // Store constructor function
 
-function Store(location, minCust, maxCust, avgCookieSale) {
-  this.location = location;
+function Store(name, minCust, maxCust, avgCookieSale) {
+  this.name = name;
   this.minCust = minCust;
   this.maxCust = maxCust;
   this.avgCookieSale = avgCookieSale;
@@ -54,7 +54,7 @@ function Store(location, minCust, maxCust, avgCookieSale) {
 
 // This function calls the constructor function using passed-in array of store data, then pushes the returned object into the globalStores
 // With this function I can construct objects from any number of stores.
-// I can even pass in a single location's data as single-row 2D array to get it constructed and pushed into the globalStores
+// I can even pass in a single name's data as single-row 2D array to get it constructed and pushed into the globalStores
 
 function constructStores(newStoreData) {
   // console.table(newStoreData);
@@ -93,11 +93,11 @@ Store.prototype.getDailyTotal = function () {
 
 Store.prototype.constructRow = function () {
   let storeRowElem = document.createElement('tr');
-  storeRowElem.setAttribute('id', this.location);
+  storeRowElem.setAttribute('id', this.name);
   storeRowGroupElem.appendChild(storeRowElem);
 
   let storeRowLabelElem = document.createElement('td');
-  storeRowLabelElem.textContent = this.location;
+  storeRowLabelElem.textContent = this.name;
   storeRowElem.appendChild(storeRowLabelElem);
 
   for (let j = 0; j < this.custPerHour.length; j++) {
@@ -120,7 +120,7 @@ Store.prototype.addRowToTable = function () {
 
 Store.prototype.refreshRow = function () {
   let refreshedRow = this.constructRow();
-  let oldRow = document.getElementById(this.location);
+  let oldRow = document.getElementById(this.name);
   storeRowGroupElem.replaceChild(refreshedRow, oldRow);
 };
 
@@ -177,10 +177,13 @@ function handleSubmit(event) {
   addGlobalCPerHour();
   console.table(globalStores);
   refreshFooter();
+
+  addStoreForm.reset();
 }
 
 function refreshFooter() {
-  salesTableElem.removeChild(document.getElementById('footerRow'));
+  let oldFooter = document.getElementById('footerRow');
+  oldFooter.remove();
   appendTableFooter();
 }
 
@@ -196,7 +199,6 @@ function addNewStoreRows(storeArr) {
 
 function appendTableHeader() {
   let headerRowElem = document.createElement('tr');
-  tableHRowElem.appendChild(headerRowElem);
 
   let hoursLabelElem = document.createElement('th');
   hoursLabelElem.textContent = 'Hours';
@@ -209,6 +211,8 @@ function appendTableHeader() {
   let storeDailyTotalLabel = document.createElement('th');
   storeDailyTotalLabel.textContent = 'Daily Location Total';
   headerRowElem.appendChild(storeDailyTotalLabel);
+
+  tHeadElem.appendChild(headerRowElem);
 }
 
 function appendTableFooter() {
