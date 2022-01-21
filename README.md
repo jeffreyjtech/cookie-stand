@@ -6,8 +6,9 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 
 ## Links and Resources
 
-- Used the [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC)
-- Used [Meyerweb.com's Reset CSS](http://meyerweb.com/eric/tools/css/reset/)
+- Used the [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC) as the H1 font.
+- Used [Meyerweb.com's Reset CSS](http://meyerweb.com/eric/tools/css/reset/) file.
+- Validated HTML using W3C's [Markup Validation Service](https://validator.w3.org/)
 
 ## Reflections and Comments
 
@@ -30,3 +31,8 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 - The CSS for this iteration of the site was a challenge. I took just enough time to get the homepage laid out *reasonably* well. Shout-out to my classmate, Nicholas M., for helping out with the wireframe lab (I'll add a link to his GitHub when I find it), which I completed before starting on this. The wisdom he shared was crucial to completing both labs.
 - The site is lacking the finer CSS tweaks to make the site attractive, but I'll make time for that before final submission.
 - Fortunately, I had all the JavaScript components completed in Lab 07 (not including stretch goals), so that was
+
+### Lab 09
+
+- It took a bit of re-organization and forethought, but getting the submission form added was relatively easy.
+- The hardest part was deciding what the "best" way of formatting the HTML would be. As nice as semantic tags are, their existence leads me to overthink what the best element is or hesitate using a certain semantic element because it might not be "semantically correct".
