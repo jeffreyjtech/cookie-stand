@@ -7,12 +7,15 @@ body{
   width: fit-content;
   max-width: min-content;
   padding: 0.3em;
-  background: white;
+  background: snow;
   margin: auto;
   margin-top: 30px;
+  color: rgb(61, 65, 73);
 }
 #tableSection h2{
+  color: rgb(102, 145, 180);
   margin-left: 1em;
+  margin-bottom: 5px;
 }
 table {
   text-align: left;

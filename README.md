@@ -36,3 +36,7 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 
 - It took a bit of re-organization and forethought, but getting the submission form added was relatively easy.
 - The hardest part was deciding what the "best" way of formatting the HTML would be. As nice as semantic tags are, their existence leads me to overthink what the best element is or hesitate using a certain semantic element because it might not be "semantically correct".
+
+### Lab 10
+
+- I learned a lot about CSS between Lab 08 and now. With that, I added a much more attractive overall look to the website. The color scheme is grey balanced with salmon-pink and light blue accents.
