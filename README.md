@@ -6,7 +6,7 @@ Salmon Cookies (made with real salmon) is a cookie stand with multiple locations
 
 ## Links and Resources
 
-- Used the [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC) as the H1 font.
+- Used the Google fonts [Amatic SC Google Font](https://fonts.google.com/specimen/Amatic+SC), [Fredoka One](https://fonts.google.com/specimen/Fredoka+One), and [Bebas Neue](https://fonts.google.com/specimen/Bebas+Neue?query=bebas).
 - Used [Meyerweb.com's Reset CSS](http://meyerweb.com/eric/tools/css/reset/) file.
 - Validated HTML using W3C's [Markup Validation Service](https://validator.w3.org/)
 
