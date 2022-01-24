@@ -2,6 +2,8 @@
 
 Salmon Cookies (made with real salmon) is a cookie stand with multiple locations across the world. This is their website which has a public page with information about the business, and a sales page which tracks sales data across their locations.
 
+The website is live here: [Salmon Cookies](https://jeffreyjtech.github.io/cookie-stand/index.html)
+
 ## Author: Jeffrey Jenkins
 
 ## Links and Resources
